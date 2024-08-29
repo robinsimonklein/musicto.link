@@ -11,6 +11,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@nuxthub/core": "^0.7.7",
     "nuxt": "^3.13.0",
     "vue": "latest",
     "zod": "^3.23.8"
@@ -20,6 +21,7 @@
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
-    "prettier": "^3.3.3"
+    "prettier": "^3.3.3",
+    "wrangler": "^3.72.3"
   }
 }
