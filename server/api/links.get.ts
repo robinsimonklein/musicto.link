@@ -25,36 +25,41 @@ const supportedPlatforms = [
   'amazonMusic',
 ];
 
-export default defineEventHandler(async event => {
-  const query = await getValidatedQuery(event, data => {
-    return z
-      .object({
-        url: z.string().url(),
-      })
-      .parse(data);
-  });
-
-  const url = query.url;
-
-  if (!url) {
-    return createError({ statusCode: 400, statusMessage: 'Missing required query parameter: url.' });
-  }
-
-  try {
-    const data = await getCachedMusicData(url);
-
-    const links = getLinks(data);
-    const metadata = getMetadata(data);
-
-    return { metadata, links };
-  } catch (error) {
-    return createError({
-      statusCode: 500,
-      statusMessage: 'Could not retrieve song.',
-      message: (error as Error).message,
+export default defineCachedEventHandler(
+  async event => {
+    const query = await getValidatedQuery(event, data => {
+      return z
+        .object({
+          url: z.string().url(),
+        })
+        .parse(data);
     });
-  }
-});
+
+    const url = query.url;
+
+    if (!url) {
+      return createError({ statusCode: 400, statusMessage: 'Missing required query parameter: url.' });
+    }
+
+    try {
+      const data = await fetchMusicData(url);
+
+      const links = getLinks(data);
+      const metadata = getMetadata(data);
+
+      return { metadata, links };
+    } catch (error) {
+      return createError({
+        statusCode: 500,
+        statusMessage: 'Could not retrieve song.',
+        message: (error as Error).message,
+      });
+    }
+  },
+  {
+    maxAge: 60 * 60, // 1 hour
+  },
+);
 
 function getLinks(data: MusicData): ResponseLink[] {
   if (!data.linksByPlatform) return [];
