@@ -1,0 +1,19 @@
+[*.{js,ts,cjs,cts}]
+tab_width = 2
+indent_size = 2
+indent_style = space
+
+[*.{css,scss}]
+tab_width = 2
+indent_size = 2
+indent_style = space
+
+[*.{yaml,yml,json}]
+tab_width = 2
+indent_size = 2
+indent_style = space
+
+[*.md]
+tab_width = 2
+indent_size = 2
+indent_style = space
