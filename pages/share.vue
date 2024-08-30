@@ -34,9 +34,11 @@
                   :to="link.url"
                   variant="ghost"
                   color="gray"
+                  icon="i-heroicons-play-20-solid"
                   external
-                  >Listen</UButton
                 >
+                  Listen
+                </UButton>
               </div>
             </li>
           </ul>

@@ -4,10 +4,15 @@
       <div class="max-w-xl mx-auto">
         <div class="flex items-center mt-40">
           <div class="w-full">
-            <h1 class="hidden">musicto.link</h1>
-            <p class="text-sm opacity-60 mb-6">
-              Get a multi-platform link of your song so anyone can listen in their app.
-            </p>
+            <div class="text-center mb-14">
+              <h1 class="inline-block">
+                <LogoFull class="h-[70px] mb-6" />
+                <span class="sr-only">musicto.link</span>
+              </h1>
+              <p class="text-sm opacity-60">
+                Get a multi-platform link of your song so anyone can listen in their music app.
+              </p>
+            </div>
             <form class="flex flex-col sm:flex-row items-center gap-4 w-full" @submit.prevent="onSubmit">
               <UInput
                 v-model="url"
@@ -22,8 +27,7 @@
                 color="black"
                 size="xl"
                 type="submit"
-                :loading="isLoading"
-                :disabled="!url?.length"
+                :disabled="!url?.length || isLoading"
               >
                 Share
               </UButton>

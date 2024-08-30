@@ -6,8 +6,12 @@
           class="px-6 py-3 max-w-2xl mx-auto border dark:border-gray-800 rounded-2xl backdrop-blur-3xl dark:bg-gray-900/20"
         >
           <div class="flex items-center justify-between">
-            <NuxtLink class="text-xl font-heading" to="/">musicto•link</NuxtLink>
-            <NuxtLink to="/">/</NuxtLink>
+            <div class="flex items-center">
+              <NuxtLink to="/">
+                <Logo class="w-6 h-6 text-white mr-4" />
+              </NuxtLink>
+            </div>
+            <p>•</p>
           </div>
         </div>
       </UContainer>

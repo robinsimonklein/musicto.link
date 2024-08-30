@@ -4,8 +4,8 @@ export default <Partial<Config>>{
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
-        heading: ['Syne', 'serif'],
+        sans: ['Open Sans', 'sans-serif'],
+        heading: ['Archivo', 'sans-serif'],
       },
     },
   },
