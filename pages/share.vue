@@ -1,26 +1,73 @@
 <template>
   <div>
     <template v-if="data">
-      <div v-if="data.metadata">
-        <img v-if="data.metadata.thumbnailUrl" :src="data.metadata.thumbnailUrl" loading="lazy" />
-        <h1>{{ data.metadata.title }}</h1>
-        <p>{{ data.metadata.artistName }}</p>
-      </div>
-      <div v-if="data?.links">
-        <ul>
-          <li v-for="(link, index) in data.links" :key="index">
-            <a :href="link.url">{{ link.platform }}</a>
-          </li>
-        </ul>
-      </div>
+      <UContainer>
+        <div v-if="data.metadata">
+          <div class="flex flex-col items-center mt-10 mb-20">
+            <div class="relative">
+              <div class="rounded-2xl overflow-hidden aspect-1 w-[240px] max-w-full mb-10 z-10 relative">
+                <img
+                  v-if="data.metadata.thumbnailUrl"
+                  class="w-full h-full object-cover"
+                  :src="data.metadata.thumbnailUrl"
+                  loading="lazy"
+                />
+              </div>
+              <img
+                v-if="data.metadata.thumbnailUrl"
+                class="w-full h-full object-cover z-0 absolute inset-0 blur-3xl opacity-[99]"
+                :src="data.metadata.thumbnailUrl"
+                loading="lazy"
+              />
+            </div>
+            <h1 class="relative z-10 font-bold text-3xl text-center font-heading">{{ data.metadata.title }}</h1>
+            <p class="relative z-10 dark:text-gray-400 mt-0.5 text-center">{{ data.metadata.artistName }}</p>
+          </div>
+        </div>
+        <div v-if="data?.links">
+          <ul class="space-y-4 max-w-xl mx-auto">
+            <li v-for="(link, index) in data.links" :key="index">
+              <div class="relative flex items-center border dark:border-gray-800 p-5 rounded-2xl dark:bg-gray-900/10">
+                <div class="inline-flex">{{ platformLabels[link.platform] }}</div>
+                <UButton
+                  class="ml-auto before:absolute before:inset-0"
+                  :to="link.url"
+                  variant="ghost"
+                  color="gray"
+                  external
+                  >Listen</UButton
+                >
+              </div>
+            </li>
+          </ul>
+        </div>
+      </UContainer>
     </template>
-    <template v-else> Oops, we didn't find your song. </template>
+    <template v-else>
+      <UContainer>
+        <div class="my-16 text-center">
+          <p class="text-center mb-10">Oops, we didn't find your song.</p>
+          <UButton size="xl" to="/">Try another</UButton>
+        </div>
+      </UContainer>
+    </template>
   </div>
 </template>
 
 <script setup lang="ts">
-const route = useRoute();
+const platformLabels = {
+  itunes: 'iTunes',
+  appleMusic: 'Apple Music',
+  youtubeMusic: 'YouTube Music',
+  youtube: 'YouTube',
+  tidal: 'Tidal',
+  spotify: 'Spotify',
+  napster: 'Napster',
+  deezer: 'Deezer',
+  amazonMusic: 'Amazon Music',
+};
 
+const route = useRoute();
 const url = route.query.url;
 
 const { data } = await useFetch('/api/links', {

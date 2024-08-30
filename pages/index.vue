@@ -1,20 +1,53 @@
 <template>
   <div>
-    <h1>musicto.link</h1>
-    <p>Get a multi-platform link of your song so anyone can listen in their app.</p>
-    <form @submit.prevent="onSubmit">
-      <input v-model="url" type="text" placeholder="Enter your song URL..." required />
-      <button type="submit">Share</button>
-    </form>
+    <UContainer>
+      <div class="max-w-xl mx-auto">
+        <div class="flex items-center mt-40">
+          <div class="w-full">
+            <h1 class="hidden">musicto.link</h1>
+            <p class="text-sm opacity-60 mb-6">
+              Get a multi-platform link of your song so anyone can listen in their app.
+            </p>
+            <form class="flex flex-col sm:flex-row items-center gap-4 w-full" @submit.prevent="onSubmit">
+              <UInput
+                v-model="url"
+                class="w-full sm:flex-1"
+                size="xl"
+                type="text"
+                placeholder="Enter your song URL..."
+                :disabled="isLoading"
+              />
+              <UButton
+                class="w-full sm:w-auto justify-center"
+                color="black"
+                size="xl"
+                type="submit"
+                :loading="isLoading"
+                :disabled="!url?.length"
+              >
+                Share
+              </UButton>
+            </form>
+          </div>
+        </div>
+      </div>
+    </UContainer>
   </div>
 </template>
 
 <script setup lang="ts">
 const url = ref('');
 
-const onSubmit = () => {
+const isLoading = ref(false);
+
+const onSubmit = async () => {
   if (!url.value?.length) return;
 
-  navigateTo(`/share?url=${url.value}`);
+  try {
+    isLoading.value = true;
+    await navigateTo(`/share?url=${url.value}`);
+  } finally {
+    isLoading.value = false;
+  }
 };
 </script>

@@ -13,9 +13,12 @@ export default defineNuxtConfig({
     },
   },
 
-  modules: ['@nuxthub/core'],
+  modules: ['@nuxthub/core', '@nuxt/ui', '@nuxt/fonts', '@vueuse/nuxt'],
 
   hub: {
     cache: true,
+  },
+  colorMode: {
+    preference: 'dark',
   },
 });
