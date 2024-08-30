@@ -54,4 +54,8 @@ const onSubmit = async () => {
     isLoading.value = false;
   }
 };
+
+useSeoMeta({
+  ogImage: '/images/musicto-link_social_cover.png',
+});
 </script>
