@@ -1,7 +1,11 @@
 <template>
-  <NuxtLayout>
-    <NuxtPage />
-  </NuxtLayout>
+  <div>
+    <NuxtLoadingIndicator color="#f87171" />
+
+    <NuxtLayout>
+      <NuxtPage />
+    </NuxtLayout>
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -41,7 +45,7 @@ useSeoMeta({
   description: 'Share a multi-platform song link so everyone can listen in their music app.',
   ogDescription: 'Share a multi-platform song link so everyone can listen in their music app.',
   twitterDescription: 'Share a multi-platform song link so everyone can listen in their music app.',
-  ogUrl: 'https://musicto.link',
+  ogUrl: siteConfig.url,
   twitterCard: 'summary_large_image',
   ogType: 'website',
 });
