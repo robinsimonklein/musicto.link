@@ -12,12 +12,19 @@ export default defineNuxtConfig({
   },
 
   routeRules: {
-    '/share': {
-      swr: 24 * 60 * 60, // 1 day
+    '/share/**': {
+      swr: process.env.NODE_ENV === 'development' ? false : 24 * 60 * 60, // 1 day
+      security: {
+        headers: {
+          contentSecurityPolicy: {
+            'img-src': ["'self'", 'data:', 'https://is1-ssl.mzstatic.com'],
+          },
+        },
+      },
     },
   },
 
-  modules: ['@nuxthub/core', '@nuxt/ui', '@nuxt/fonts', '@vueuse/nuxt', 'nuxt-og-image'],
+  modules: ['@nuxthub/core', '@nuxt/ui', '@nuxt/fonts', '@vueuse/nuxt', 'nuxt-og-image', 'nuxt-security'],
 
   hub: {
     cache: true,
@@ -28,5 +35,10 @@ export default defineNuxtConfig({
   },
   ogImage: {
     fonts: ['Open+Sans:500', 'Archivo:700'],
+  },
+  security: {
+    headers: {
+      crossOriginEmbedderPolicy: process.env.NODE_ENV === 'development' ? 'unsafe-none' : 'require-corp',
+    },
   },
 });

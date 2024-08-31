@@ -11,6 +11,7 @@
                   class="w-full h-full object-cover"
                   :src="data.metadata.thumbnailUrl"
                   loading="lazy"
+                  crossorigin
                 />
               </div>
               <img
@@ -25,6 +26,7 @@
                 "
                 :src="data.metadata.thumbnailUrl"
                 loading="lazy"
+                crossorigin
               />
             </div>
             <h1 class="relative z-10 font-bold text-3xl text-center font-heading">{{ data.metadata.title }}</h1>

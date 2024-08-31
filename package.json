@@ -16,6 +16,7 @@
     "@nuxthub/core": "^0.7.7",
     "nuxt": "^3.13.0",
     "nuxt-og-image": "^3.0.0-rc.65",
+    "nuxt-security": "^2.0.0-rc.9",
     "vue": "latest",
     "zod": "^3.23.8"
   },
