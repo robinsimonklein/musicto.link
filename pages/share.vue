@@ -24,11 +24,22 @@
             <p class="relative z-10 dark:text-gray-400 mt-0.5 text-center">{{ data.metadata.artistName }}</p>
           </div>
         </div>
-        <div v-if="data?.links">
+        <div v-if="links?.length">
           <ul class="space-y-4 max-w-xl mx-auto">
-            <li v-for="(link, index) in data.links" :key="index">
+            <li v-for="(link, index) in links" :key="index">
               <div class="relative flex items-center border dark:border-gray-800 p-5 rounded-2xl dark:bg-gray-900/10">
-                <div class="inline-flex">{{ platformLabels[link.platform] }}</div>
+                <div class="flex items-center">
+                  <div v-if="platformInfos[link.platform]" class="mr-3">
+                    <img
+                      class="inline-block w-[32px] h-[32px] object-contain"
+                      :src="`/icon/platform/${link.platform}.svg`"
+                      loading="lazy"
+                    />
+                  </div>
+                  <p class="text-md">
+                    {{ platformInfos[link.platform] ? platformInfos[link.platform].label : link.platform }}
+                  </p>
+                </div>
                 <UButton
                   class="ml-auto before:absolute before:inset-0"
                   :to="link.url"
@@ -57,16 +68,16 @@
 </template>
 
 <script setup lang="ts">
-const platformLabels = {
-  itunes: 'iTunes',
-  appleMusic: 'Apple Music',
-  youtubeMusic: 'YouTube Music',
-  youtube: 'YouTube',
-  tidal: 'Tidal',
-  spotify: 'Spotify',
-  napster: 'Napster',
-  deezer: 'Deezer',
-  amazonMusic: 'Amazon Music',
+const platformInfos: Record<string, { label: string; position: number }> = {
+  appleMusic: { label: 'Apple Music', position: 1 },
+  spotify: { label: 'Spotify', position: 2 },
+  deezer: { label: 'Deezer', position: 3 },
+  youtubeMusic: { label: 'YouTube Music', position: 4 },
+  youtube: { label: 'YouTube', position: 5 },
+  itunes: { label: 'iTunes', position: 9 },
+  amazonMusic: { label: 'Amazon Music', position: 6 },
+  tidal: { label: 'Tidal', position: 7 },
+  napster: { label: 'Napster', position: 8 },
 };
 
 const route = useRoute();
@@ -76,6 +87,11 @@ const siteConfig = useSiteConfig();
 
 const { data } = await useFetch('/api/links', {
   query: { url },
+});
+
+const links = computed(() => {
+  if (!data.value?.links?.length) return [];
+  return data.value?.links.sort((a, b) => platformInfos[a.platform].position - platformInfos[b.platform].position);
 });
 
 defineOgImageComponent('Share', {
