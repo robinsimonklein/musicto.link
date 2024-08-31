@@ -16,6 +16,13 @@
               <img
                 v-if="data.metadata.thumbnailUrl"
                 class="w-full h-full object-cover z-0 absolute inset-0 blur-3xl opacity-[99]"
+                style="
+                  -webkit-backface-visibility: hidden;
+                  -moz-backface-visibility: hidden;
+                  -webkit-transform: translate3d(0, 0.01rem, 0);
+                  -moz-transform: translate3d(0, 0.01rem, 0);
+                  will-change: transform;
+                "
                 :src="data.metadata.thumbnailUrl"
                 loading="lazy"
               />
